@@ -15,6 +15,7 @@ namespace SchoolWeb.Mappings
             CreateMap<Placement, PlacementVM>().ReverseMap();
             CreateMap<Student, StudentVM>().ReverseMap();
             CreateMap<School, SchoolVM>().ReverseMap();
+            CreateMap<School, CreateSchoolVM>().ReverseMap();
             CreateMap<Organization, OrganizationVM>().ReverseMap();
             CreateMap<Rank, RankVM>().ReverseMap();
 

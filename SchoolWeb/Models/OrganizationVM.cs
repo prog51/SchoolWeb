@@ -8,6 +8,7 @@ namespace SchoolWeb.Models
 {
     public class OrganizationVM
     {
+
         public string Id { get; set; }
 
         [Required]

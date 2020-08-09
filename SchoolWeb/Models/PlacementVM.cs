@@ -24,9 +24,9 @@ namespace SchoolWeb.Models
 
         public IEnumerable<SelectListItem> Organizations { get; set; }
 
-        public IEnumerable<SelectListItem> Students { get; set; }
+         public IEnumerable<SelectListItem> Students { get; set; }
 
-        public IEnumerable<SelectListItem> Schools { get; set; }
+         public IEnumerable<SelectListItem> Schools { get; set; }
 
         public DateTime DateCreated { get; set; }
 
