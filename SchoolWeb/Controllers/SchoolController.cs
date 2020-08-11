@@ -33,6 +33,10 @@ namespace SchoolWeb.Controllers
         // GET: School/Details/5
         public ActionResult Details(int id)
         {
+            if (!_repo.isExists(id))
+            {
+                return NotFound();
+            }
             return View();
         }
 

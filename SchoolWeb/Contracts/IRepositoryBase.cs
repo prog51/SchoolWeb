@@ -16,6 +16,8 @@ namespace SchoolWeb.Contracts
 
         bool Update(T entity);
 
+        bool isExists(int id);
+
         bool Delete(T entity);
 
         bool Save();
