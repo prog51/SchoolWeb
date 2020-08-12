@@ -37,46 +37,82 @@ namespace SchoolWeb.Controllers
             {
                 return NotFound();
             }
-            return View();
+
+            var Schools = _repo.FindById(id);
+            var Model = _mapper.Map<SchoolVM>(Schools);
+            return View(Model);
         }
 
         // GET: School/Create
         public ActionResult Create()
         {
-            return View();
+            return View(); //view already created
         }
 
         // POST: School/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(CreateSchoolVM Data)
         {
             try
             {
-                // TODO: Add insert logic here
+                if (!ModelState.IsValid)
+                {
+                    return View(Data);
+                }
 
+                var Schools = _mapper.Map<School>(Data);
+                Schools.DateCreated = DateTime.Now;
+                var Successful = _repo.Create(Schools);
+
+                if (!Successful)
+                {
+                    ModelState.AddModelError("","There was an unknown error. database was not updated.");
+                    return View(Data);
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                ModelState.AddModelError("", "There was an unknown error. database was not updated.");
+                return View(Data);
             }
         }
 
         // GET: School/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            if (!_repo.isExists(id))
+            {
+                return NotFound();
+            }
+
+            var Schools = _repo.FindById(id);
+            var Model = _mapper.Map<SchoolVM>(Schools);
+
+            return View(Model);
         }
 
         // POST: School/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(SchoolVM Data)
         {
             try
             {
-                // TODO: Add update logic here
+                if (!ModelState.IsValid)
+                {
+                    return View(Data);
+                }
+
+                var Schools = _mapper.Map<School>(Data);
+                var Successful = _repo.Update(Schools);
+
+                if (!Successful)
+                {
+                    ModelState.AddModelError("", "There was an unknown error. database was not updated.");
+                    return View(Data);
+                }
 
                 return RedirectToAction(nameof(Index));
             }
@@ -89,18 +125,41 @@ namespace SchoolWeb.Controllers
         // GET: School/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var School = _repo.FindById(id);
+
+            if (School == null)
+            {
+                return NotFound();
+            }
+            var Successful = _repo.Delete(School);
+
+            if (!Successful)
+            {
+                return BadRequest();
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: School/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, SchoolVM Data)
         {
             try
             {
                 // TODO: Add delete logic here
+                var School = _repo.FindById(id);
 
+                if (School == null)
+                {
+                    return NotFound();
+                }
+                var Successful = _repo.Delete(School);
+
+                if (!Successful)
+                {
+                    return View(Data);
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch

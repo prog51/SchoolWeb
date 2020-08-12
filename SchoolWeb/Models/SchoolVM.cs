@@ -31,7 +31,6 @@ namespace SchoolWeb.Models
 
     public class CreateSchoolVM
     {
-
         public int Id { get; set; }
 
         [Required]
@@ -41,14 +40,12 @@ namespace SchoolWeb.Models
         public string Email { get; set; }
 
         [Required]
-        public string Address { get; set; }
-
-        [Required]
         public string Password { get; set; }
 
         [Required]
-        public string Parish { get; set; }
+        public string Address { get; set; }
 
-        public DateTime DateCreated { get; set; }
-    }
+        [Required]
+        public string Parish { get; set; }
+      }
 }

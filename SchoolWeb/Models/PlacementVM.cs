@@ -22,11 +22,11 @@ namespace SchoolWeb.Models
 
         public int SchoolID { get; set; }
 
-        public IEnumerable<SelectListItem> Organizations { get; set; }
+       /* public IEnumerable<SelectListItem> Organizations { get; set; }
 
          public IEnumerable<SelectListItem> Students { get; set; }
 
-         public IEnumerable<SelectListItem> Schools { get; set; }
+         public IEnumerable<SelectListItem> Schools { get; set; }*/
 
         public DateTime DateCreated { get; set; }
 

@@ -21,9 +21,9 @@ namespace SchoolWeb.Models
 
         public string OrganizationID { get; set; }
 
-        public IEnumerable<SelectListItem> Schools { get; set; }
+        /*public IEnumerable<SelectListItem> Schools { get; set; }
 
-        public IEnumerable<SelectListItem> Organizations { get; set; }
+        public IEnumerable<SelectListItem> Organizations { get; set; }*/
 
         [Display(Name ="Rank")]
         public string Value { get; set; }

@@ -42,6 +42,12 @@ namespace SchoolWeb.Repository
             return DataValue;
         }
 
+        public bool isExists(int id)
+        {
+            var exists = _db.Ranks.Any(q => q.Id == id);
+            return exists;
+        }
+
         public bool Save()
         {
             var Value = _db.SaveChanges() > 0;

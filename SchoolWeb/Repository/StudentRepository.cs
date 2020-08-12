@@ -19,32 +19,44 @@ namespace SchoolWeb.Repository
 
         public bool Create(Student entity)
         {
-            throw new NotImplementedException();
+            var DataValue = _db.Students.Add(entity);
+            return Save();
         }
 
         public bool Delete(Student entity)
         {
-            throw new NotImplementedException();
+            var DataValue = _db.Students.Remove(entity);
+            return Save();
         }
 
         public ICollection<Student> FindAll()
         {
-            throw new NotImplementedException();
+            var DataValue = _db.Students.ToList();
+            return DataValue;
         }
 
         public Student FindById(int id)
         {
-            throw new NotImplementedException();
+            var DataValue = _db.Students.Find(id);
+            return DataValue;
+        }
+
+        public bool isExists(int id)
+        {
+            var exists = _db.Students.Any(q => q.Id == id);
+            return exists;
         }
 
         public bool Save()
         {
-            throw new NotImplementedException();
+            var Value = _db.SaveChanges() > 0;
+            return Value;
         }
 
         public bool Update(Student entity)
         {
-            throw new NotImplementedException();
+            var DataValue = _db.Students.Update(entity);
+            return Save();
         }
     }
 }

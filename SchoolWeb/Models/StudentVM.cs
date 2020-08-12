@@ -17,6 +17,7 @@ namespace SchoolWeb.Models
         public int Age { get; set; }
 
         [Required]
+        [Display(Name="Average Score")]
         public double Score { get; set; }
 
         [Required]
@@ -25,6 +26,7 @@ namespace SchoolWeb.Models
         [Required]
         public string Email { get; set; }
 
+        [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; }
     }
 }
