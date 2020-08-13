@@ -102,11 +102,25 @@ namespace SchoolWeb.Controllers
         // POST: Student/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(StudentVM Data)
         {
             try
             {
                 // TODO: Add update logic here
+
+                if (!ModelState.IsValid)
+                {
+                    return View(Data);
+                }
+
+                var Students = _mapper.Map<Student>(Data);
+                var Successful = _repo.Update(Students);
+
+                if (!Successful)
+                {
+                    ModelState.AddModelError("", "There was an unknown error. database was not updated.");
+                    return View(Data);
+                }
 
                 return RedirectToAction(nameof(Index));
             }
@@ -119,17 +133,43 @@ namespace SchoolWeb.Controllers
         // GET: Student/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+
+            var Student = _repo.FindById(id);
+
+            if (Student == null)
+            {
+                return NotFound();
+            }
+            var Successful = _repo.Delete(Student);
+
+            if (!Successful)
+            {
+                return BadRequest();
+            }
+            return RedirectToAction(nameof(Index));
+           
         }
 
         // POST: Student/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, StudentVM Data)
         {
             try
             {
                 // TODO: Add delete logic here
+                var Student = _repo.FindById(id);
+
+                if (Student == null)
+                {
+                    return NotFound();
+                }
+                var Successful = _repo.Delete(Student);
+
+                if (!Successful)
+                {
+                    return View(Data);
+                }
 
                 return RedirectToAction(nameof(Index));
             }

@@ -6,6 +6,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SchoolWeb.Contracts;
+using SchoolWeb.Data;
+using SchoolWeb.Models;
 
 namespace SchoolWeb.Controllers
 {
@@ -25,7 +27,9 @@ namespace SchoolWeb.Controllers
         // GET: Placement
         public ActionResult Index()
         {
-            return View();
+            var placementL = _repo.FindAll().ToList();
+            var Model = _mapper.Map<List<Placement>, List<PlacementVM>>(placementL);
+            return View(Model);
         }
 
         // GET: Placement/Details/5
