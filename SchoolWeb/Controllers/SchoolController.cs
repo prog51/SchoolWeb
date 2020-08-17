@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SchoolWeb.Contracts;
@@ -11,6 +12,8 @@ using SchoolWeb.Models;
 
 namespace SchoolWeb.Controllers
 {
+
+    [Authorize(Roles = "ExamBody")]
     public class SchoolController : Controller
     {
         private readonly ISchoolRepository _repo;

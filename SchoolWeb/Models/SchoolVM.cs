@@ -21,6 +21,7 @@ namespace SchoolWeb.Models
         public string Address { get; set; }
 
         [Required]
+        [Display(Name="Parish")]
         public string Password { get; set; }
 
         [Required]

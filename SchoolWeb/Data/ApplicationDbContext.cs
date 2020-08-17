@@ -19,9 +19,6 @@ namespace SchoolWeb.Data
         public DbSet<Rank> Ranks { get; set; }
         public DbSet<Placement> Placements { get; set; }
         public DbSet<Student> Students { get; set; }
-        public DbSet<SchoolWeb.Models.RankVM> RankVM { get; set; }
-        public DbSet<SchoolWeb.Models.SchoolVM> SchoolVM { get; set; }
-        public DbSet<SchoolWeb.Models.CreateSchoolVM> CreateSchoolVM { get; set; }
-        public DbSet<SchoolWeb.Models.StudentVM> StudentVM { get; set; }
+        
     }
 }

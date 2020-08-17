@@ -41,23 +41,41 @@ namespace SchoolWeb.Controllers
         // GET: Rank/Create
         public ActionResult Create()
         {
-            return View();
+            var model = new Organization();
+            model.OrgName = "Kingston Tech";
+            return View(model);
+            //return View();
         }
 
         // POST: Rank/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(RankVM Data)
         {
             try
             {
                 // TODO: Add insert logic here
+                if(!ModelState.IsValid)
+                {
+                    return View(Data);
+                }
+
+                var Ranks = _mapper.Map<Rank>(Data);
+                Ranks.DateCreated = DateTime.Now;
+                var Successful = _repo.Create(Ranks);
+
+                if (!Successful)
+                {
+                    ModelState.AddModelError("", "There was an unknown error. database was not updated.");
+                    return View(Data);
+                }
 
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                ModelState.AddModelError("", "There was an unknown error. database was not updated.");
+                return View(Data);
             }
         }
 
