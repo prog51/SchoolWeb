@@ -21,10 +21,6 @@ namespace SchoolWeb.Models
         public string Address { get; set; }
 
         [Required]
-        [Display(Name="Parish")]
-        public string Password { get; set; }
-
-        [Required]
         public string Parish { get; set; }
 
         public DateTime DateCreated { get; set; }
@@ -40,8 +36,6 @@ namespace SchoolWeb.Models
         [Required]
         public string Email { get; set; }
 
-        [Required]
-        public string Password { get; set; }
 
         [Required]
         public string Address { get; set; }

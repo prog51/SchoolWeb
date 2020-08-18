@@ -2,7 +2,7 @@
 
 namespace SchoolWeb.Migrations
 {
-    public partial class AddNewDatabaseTable21221 : Migration
+    public partial class AddedParishAgain2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

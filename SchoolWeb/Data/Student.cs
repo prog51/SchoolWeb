@@ -23,6 +23,8 @@ namespace SchoolWeb.Data
         [Required]
         public string Address { get; set; }
 
+        public string Parish { get; set; }
+
         [Required]
         public string Email { get; set; }
 

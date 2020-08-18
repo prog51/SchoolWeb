@@ -10,8 +10,8 @@ using SchoolWeb.Data;
 namespace SchoolWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200818041609_AddDatabaseTables")]
-    partial class AddDatabaseTables
+    [Migration("20200818051032_AddedChangesToColumns")]
+    partial class AddedChangesToColumns
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -312,10 +312,6 @@ namespace SchoolWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Schools");
@@ -344,6 +340,9 @@ namespace SchoolWeb.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Parish")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Score")

@@ -310,10 +310,6 @@ namespace SchoolWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Schools");
@@ -342,6 +338,9 @@ namespace SchoolWeb.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Parish")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Score")

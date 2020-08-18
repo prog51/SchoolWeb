@@ -21,9 +21,6 @@ namespace SchoolWeb.Data
         public string Address { get; set; }
 
         [Required]
-        public string Password { get; set; }
-
-        [Required]
         public string Parish { get; set; }
 
         public DateTime DateCreated { get; set; }

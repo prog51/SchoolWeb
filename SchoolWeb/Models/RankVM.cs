@@ -29,7 +29,6 @@ namespace SchoolWeb.Models
 
         public IEnumerable<SelectListItem> Organizations { get; set; }
 
-        [Display(Name ="Rank: A, B, C")]
         public string Value { get; set; }
 
         public DateTime DateCreated { get; set; }
