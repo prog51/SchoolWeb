@@ -18,7 +18,7 @@ namespace SchoolWeb.Mappings
             CreateMap<School, CreateSchoolVM>().ReverseMap();
             CreateMap<Organization, OrganizationVM>().ReverseMap();
             CreateMap<Rank, RankVM>().ReverseMap();
-
+            CreateMap<Rank, CreateRankVM>().ReverseMap();
         }
     }
 }

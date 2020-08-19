@@ -25,6 +25,10 @@ namespace SchoolWeb.Data
         [Required]
         public string Value { get; set; }
 
+        [Required]
+        [Display(Name ="Provide discription of rank value")]
+        public string Description { get; set; }
+
         public DateTime DateCreated { get; set; }
     }
 }

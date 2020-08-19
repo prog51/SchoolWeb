@@ -37,12 +37,17 @@ namespace SchoolWeb.Models
 
     public class CreateRankVM
     {
-        public IEnumerable<SelectListItem> Organizations { get; set; }
-        public List<OrganizationVM> OrganizationList { get; set; }
+      [Required]
+      public IEnumerable<SelectListItem> Schools { get; set; }
 
-        public IEnumerable<SelectListItem> Schools { get; set; }
-        public List<SchoolVM> SchoolList { get; set; }
+      public string OrganizationID { get; set; }
 
-        public string Value { get; set; }
+      [Display(Name = "Rank value")]
+      public string Value { get; set; }
+
+      [Required]
+      [Display(Name = "Provide description of rank value")]
+      public string Description { get; set; }      
+
     }
 }

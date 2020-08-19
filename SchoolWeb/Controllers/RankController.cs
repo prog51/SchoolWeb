@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SchoolWeb.Contracts;
 using SchoolWeb.Data;
 using SchoolWeb.Models;
@@ -15,14 +17,22 @@ namespace SchoolWeb.Controllers
     {
 
         private readonly IRankRepository _repo;
+        private readonly ISchoolRepository _repoSch;
         private readonly IMapper _mapper;
+        private readonly UserManager<IdentityUser> _UserManager;
         // GET: Rank
 
 
-        public RankController(IRankRepository repo, IMapper mapper)
+        public RankController(IRankRepository repo, 
+            IMapper mapper,
+            ISchoolRepository repoSch,
+             UserManager<IdentityUser> UserManager
+          )
         {
             _repo = repo;
             _mapper = mapper;
+            _repoSch = repoSch;
+            _UserManager = UserManager;
         }
 
         public ActionResult Index()
@@ -35,16 +45,35 @@ namespace SchoolWeb.Controllers
         // GET: Rank/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+             if (!_repo.isExists(id))
+            {
+                return NotFound();
+            }
+
+            var Data = _repo.FindById(id);
+            var Model = _mapper.Map<RankVM>(Data);
+            return View(Model);
         }
 
         // GET: Rank/Create
         public ActionResult Create()
         {
-            var model = new Organization();
-            model.OrgName = "Kingston Tech";
-            return View(model);
-            //return View();
+            var School = _repoSch.FindAll();
+            var user = _UserManager.GetUserAsync(User).Result;
+            var model1 = School.Select(q => new SelectListItem {
+                
+                Text =  q.Name,
+                Value = q.Id.ToString()
+
+            });
+
+            var Data = new CreateRankVM
+            {
+                Schools = model1,
+                OrganizationID = user.Id
+
+            };
+            return View(Data);
         }
 
         // POST: Rank/Create
@@ -82,17 +111,37 @@ namespace SchoolWeb.Controllers
         // GET: Rank/Edit/5
         public ActionResult Edit(int id)
         {
+            if (!_repo.isExists(id))
+            {
+                return NotFound();
+            }
+
+            var Ranks = _repo.FindById(id);
+            var Model = _mapper.Map<RankVM>(Ranks);
+
             return View();
         }
 
         // POST: Rank/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(RankVM Data)
         {
             try
             {
-                // TODO: Add update logic here
+                if (!ModelState.IsValid)
+                {
+                    return View(Data);
+                }
+
+                var Ranks = _mapper.Map<Rank>(Data);
+                var Successful = _repo.Update(Ranks);
+
+                if (!Successful)
+                {
+                    ModelState.AddModelError("", "There was an unknown error. database was not updated.");
+                    return View(Data);
+                }
 
                 return RedirectToAction(nameof(Index));
             }
@@ -105,18 +154,42 @@ namespace SchoolWeb.Controllers
         // GET: Rank/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var School = _repo.FindById(id);
+
+            if (School == null)
+            {
+                return NotFound();
+            }
+            var Successful = _repo.Delete(School);
+
+            if (!Successful)
+            {
+                return BadRequest();
+            }
+            return RedirectToAction(nameof(Index));
+            
         }
 
         // POST: Rank/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, RankVM Data)
         {
             try
             {
                 // TODO: Add delete logic here
+                var School = _repo.FindById(id);
 
+                if (School == null)
+                {
+                    return NotFound();
+                }
+                var Successful = _repo.Delete(School);
+
+                if (!Successful)
+                {
+                    return View(Data);
+                }
                 return RedirectToAction(nameof(Index));
             }
             catch
