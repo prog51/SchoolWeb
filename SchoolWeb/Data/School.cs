@@ -23,6 +23,9 @@ namespace SchoolWeb.Data
         [Required]
         public string Parish { get; set; }
 
+        [Required]
+        public int PassMark { get; set; }
+
         public DateTime DateCreated { get; set; }
     }
 }

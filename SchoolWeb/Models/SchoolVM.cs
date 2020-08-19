@@ -23,6 +23,10 @@ namespace SchoolWeb.Models
         [Required]
         public string Parish { get; set; }
 
+        [Required]
+        [Display(Name="School Pass Mark")]
+        public int PassMark { get; set; }
+
         public DateTime DateCreated { get; set; }
     }
 
@@ -42,5 +46,9 @@ namespace SchoolWeb.Models
 
         [Required]
         public string Parish { get; set; }
-      }
+
+        [Required]
+        [Display(Name = "School Pass Mark")]
+        public int PassMark { get; set; }
+    }
 }
