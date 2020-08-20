@@ -10,11 +10,7 @@ namespace SchoolWeb.Models
     public class PlacementVM
     {
         public int Id { get; set; }
-        
-        public OrganizationVM Organ { get; set; }
-
-        public string OrganID { get; set; }
-        
+               
         public StudentVM Student { get; set; }
 
         public int StudentID { get; set; }
@@ -23,26 +19,32 @@ namespace SchoolWeb.Models
 
         public int SchoolID { get; set; }
 
-        public IEnumerable<SelectListItem> Organizations { get; set; }
-
-         public IEnumerable<SelectListItem> Students { get; set; }
-
-         public IEnumerable<SelectListItem> Schools { get; set; }
-
         public DateTime DateCreated { get; set; }
 
      }
 
     public class CreatePlacementVM
     {
-        [Required]
-        public StudentVM Student { get; set; }
+            public int Id { get; set; }
 
-        public int StudentID { get; set; }
+           [Required]
+            public string Name { get; set; }
 
-        [Required]
-        public IEnumerable<SelectListItem> Students { get; set; }
+            [Required]
+            public string Email { get; set; }
 
-        public string OrganizationID { get; set; }
+            [Required]
+            public string Address { get; set; }
+
+            [Required]
+            public string Parish { get; set; }
+
+            [Required]
+            [Display(Name = "School Pass Mark")]
+            public int PassMark { get; set; }
+
+            public IEnumerable<SelectListItem> School { get; set; }
+
+            public IEnumerable<SelectListItem> Student { get; set; }
     }
 }

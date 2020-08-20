@@ -13,6 +13,7 @@ namespace SchoolWeb.Mappings
         public MyMapper()
         {
             CreateMap<Placement, PlacementVM>().ReverseMap();
+            CreateMap<Placement,CreatePlacementVM>().ReverseMap();
             CreateMap<Student, StudentVM>().ReverseMap();
             CreateMap<School, SchoolVM>().ReverseMap();
             CreateMap<School, CreateSchoolVM>().ReverseMap();

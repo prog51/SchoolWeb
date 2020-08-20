@@ -8,5 +8,6 @@ namespace SchoolWeb.Contracts
 {
    public interface IStudentRepository : IRepositoryBase<Student>
     {
+
     }
 }

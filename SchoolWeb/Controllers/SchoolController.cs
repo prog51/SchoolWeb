@@ -64,7 +64,7 @@ namespace SchoolWeb.Controllers
         public ActionResult Create()
         {
 
-             var RankVals = _repoRank.FindAll();
+            var RankVals = _repoRank.FindAll();
             var Ran = RankVals.Select(q => new SelectListItem
             {
                 Text = q.ValueRank,
@@ -90,7 +90,7 @@ namespace SchoolWeb.Controllers
                     return View(Data);
                 }
 
-                var Schools = _mapper.Map<School>(Data);
+                 var Schools = _mapper.Map<School>(Data);
                 Schools.DateCreated = DateTime.Now;
                 var Successful = _repo.Create(Schools);
 
@@ -106,6 +106,13 @@ namespace SchoolWeb.Controllers
                 ModelState.AddModelError("", "There was an unknown error. database was not updated.");
                 return View(Data);
             }
+
+            /*var countReturnReturn = _repo.FindAll();
+
+            var schoolRecord = _mapper.Map<School>(countReturnReturn);*/
+            
+
+           
         }
 
         // GET: School/Edit/5

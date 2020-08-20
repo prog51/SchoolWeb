@@ -64,29 +64,30 @@ namespace SchoolWeb.Controllers
         // GET: Placement/Create
         public ActionResult Create()
         {
+
             var Schools = _repoSch.FindAll();
             var Students = _repostu.FindAll();
-            var user = _UserManager.GetUserAsync(User).Result;
 
-            var model1 = Schools.Select(q => new SelectListItem
+            var SchoolModel = Schools.Select(q => new SelectListItem
             {
                 Text = q.Name,
                 Value = q.Id.ToString()
             });
 
-            var model2= Students.Select(q => new SelectListItem
+            var StudentModel = Students.Select(q => new SelectListItem
             {
                 Text = q.Name,
                 Value = q.Id.ToString()
             });
 
-            var Data = new CreatePlacementVM
+            var model = new CreatePlacementVM
             {
-                //Schools = model1,
-                OrganizationID = user.Id
-
+                School = SchoolModel,
+                Student = StudentModel
             };
-            return View(Data);
+
+            return View(model);
+
         }
 
         // POST: Placement/Create
