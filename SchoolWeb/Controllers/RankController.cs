@@ -58,39 +58,29 @@ namespace SchoolWeb.Controllers
         // GET: Rank/Create
         public ActionResult Create()
         {
-            var School = _repoSch.FindAll();
-            var user = _UserManager.GetUserAsync(User).Result;
-            var model1 = School.Select(q => new SelectListItem {
-                
-                Text =  q.Name,
-                Value = q.Id.ToString()
-
-            });
-
-            var Data = new CreateRankVM
-            {
-                Schools = model1,
-                OrganizationID = user.Id
-
-            };
-            return View(Data);
+        
+             return View();
         }
 
         // POST: Rank/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(RankVM Data)
+        public ActionResult Create(CreateRankVM Data)
         {
             try
             {
                 // TODO: Add insert logic here
-                if(!ModelState.IsValid)
+
+                if (!ModelState.IsValid)
                 {
                     return View(Data);
                 }
+                var org = _UserManager.GetUserAsync(User).Result;
 
                 var Ranks = _mapper.Map<Rank>(Data);
+                
                 Ranks.DateCreated = DateTime.Now;
+                Ranks.OrganizationID = org.Id;
                 var Successful = _repo.Create(Ranks);
 
                 if (!Successful)
@@ -106,6 +96,7 @@ namespace SchoolWeb.Controllers
                 ModelState.AddModelError("", "There was an unknown error. database was not updated.");
                 return View(Data);
             }
+
         }
 
         // GET: Rank/Edit/5

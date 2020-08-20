@@ -13,21 +13,9 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <input type="hidden" asp-for="OrganizationID" class="form-control" />
-                <span asp-validation-for="OrganizationID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="form-group">
-                    <label asp-for="Schools" class="control-label"></label>
-                    @Html.DropDownListFor(q => q.Schools, new SelectList(Model.Schools, "Value", "Text"), "Select School", new { @class = "form-control" })
-                    <span asp-validation-for="Schools" class="text-danger"></span>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Value" class="control-label"></label>
-                <input asp-for="Value" class="form-control" />
-                <span asp-validation-for="Value" class="text-danger"></span>
+                <label asp-for="ValueRank" class="control-label"></label>
+                <input asp-for="ValueRank" class="form-control" />
+                <span asp-validation-for="ValueRank" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>

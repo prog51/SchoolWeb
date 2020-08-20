@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SchoolWeb.Contracts;
 using SchoolWeb.Data;
 using SchoolWeb.Models;
@@ -18,19 +19,32 @@ namespace SchoolWeb.Controllers
     {
         private readonly ISchoolRepository _repo;
         private readonly IMapper _mapper;
+        private readonly IRankRepository _repoRank;
 
-        public SchoolController(ISchoolRepository repo, IMapper mapper)
+        public SchoolController(
+            ISchoolRepository repo, 
+            IMapper mapper, 
+            IRankRepository repoRank
+            )
         {
             _repo = repo;
             _mapper = mapper;
+            _repoRank = repoRank;
         }
 
         // GET: School
         public ActionResult Index()
         {
-            var SchoolListing = _repo.FindAll().ToList();
-            var Model = _mapper.Map<List<School>, List<SchoolVM>>(SchoolListing);
-            return View(Model);
+            var SchoolListing = _repo.FindAll();
+            var Model = _mapper.Map<List<SchoolVM>>(SchoolListing);
+
+            var Model2 = new DisplaySchoolVM
+            {
+                School = Model
+            };
+
+
+            return View(Model2);
         }
 
         // GET: School/Details/5
@@ -49,7 +63,19 @@ namespace SchoolWeb.Controllers
         // GET: School/Create
         public ActionResult Create()
         {
-            return View(); //view already created
+
+             var RankVals = _repoRank.FindAll();
+            var Ran = RankVals.Select(q => new SelectListItem
+            {
+                Text = q.ValueRank,
+                Value = q.Id.ToString()
+            });
+            var model = new CreateSchoolVM
+            {
+                Ranks = Ran
+            };
+            return View(model);
+           
         }
 
         // POST: School/Create

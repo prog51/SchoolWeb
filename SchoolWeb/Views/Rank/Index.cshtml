@@ -7,22 +7,17 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Add New Rank Tag</a>
 </p>
 <table class="table">
     <thead>
         <tr>
+                    
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SchoolID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrganizationID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Value)
+                @Html.DisplayNameFor(model => model.ValueRank)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DateCreated)
@@ -34,16 +29,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Id)
+                @Html.DisplayFor(modelItem => item.ValueRank)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SchoolID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrganizationID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Value)
+                @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateCreated)

@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SchoolWeb.Contracts;
 using SchoolWeb.Data;
 using SchoolWeb.Models;
@@ -15,12 +17,24 @@ namespace SchoolWeb.Controllers
     {
 
         private readonly IPlacementRepository _repo;
+        private readonly ISchoolRepository _repoSch;
         private readonly IMapper _mapper;
+        private readonly IStudentRepository _repostu;
+        private readonly UserManager<IdentityUser> _UserManager;
 
-        public PlacementController(IPlacementRepository repo, IMapper mapper)
+        public PlacementController(
+            IPlacementRepository repo,
+            IMapper mapper,
+             UserManager<IdentityUser> UserManager,
+             ISchoolRepository repoSch,
+             IStudentRepository repostu
+           )
         {
             _repo = repo;
             _mapper = mapper;
+            _UserManager = UserManager;
+            _repoSch = repoSch;
+            _repostu = repostu;
         }
 
 
@@ -35,13 +49,44 @@ namespace SchoolWeb.Controllers
         // GET: Placement/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+
+            if (!_repo.isExists(id))
+            {
+                return NotFound();
+            }
+
+            var Placements = _repo.FindById(id);
+            var Model = _mapper.Map<PlacementVM>(Placements);
+
+            return View(Model);
         }
 
         // GET: Placement/Create
         public ActionResult Create()
         {
-            return View();
+            var Schools = _repoSch.FindAll();
+            var Students = _repostu.FindAll();
+            var user = _UserManager.GetUserAsync(User).Result;
+
+            var model1 = Schools.Select(q => new SelectListItem
+            {
+                Text = q.Name,
+                Value = q.Id.ToString()
+            });
+
+            var model2= Students.Select(q => new SelectListItem
+            {
+                Text = q.Name,
+                Value = q.Id.ToString()
+            });
+
+            var Data = new CreatePlacementVM
+            {
+                //Schools = model1,
+                OrganizationID = user.Id
+
+            };
+            return View(Data);
         }
 
         // POST: Placement/Create

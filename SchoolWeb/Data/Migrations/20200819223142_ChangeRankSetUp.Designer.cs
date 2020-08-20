@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolWeb.Data;
 
 namespace SchoolWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200819223142_ChangeRankSetUp")]
+    partial class ChangeRankSetUp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -312,12 +314,7 @@ namespace SchoolWeb.Migrations
                     b.Property<int>("PassMark")
                         .HasColumnType("int");
 
-                    b.Property<int>("RankID")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("RankID");
 
                     b.ToTable("Schools");
                 });
@@ -451,15 +448,6 @@ namespace SchoolWeb.Migrations
                     b.HasOne("SchoolWeb.Data.Organization", "Organization")
                         .WithMany()
                         .HasForeignKey("OrganizationID");
-                });
-
-            modelBuilder.Entity("SchoolWeb.Data.School", b =>
-                {
-                    b.HasOne("SchoolWeb.Data.Rank", "RankName")
-                        .WithMany()
-                        .HasForeignKey("RankID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

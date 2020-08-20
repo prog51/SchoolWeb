@@ -12,6 +12,18 @@
     <Compile Remove="Data\Migrations\20200729005555_AddOrganiztionTable.Designer.cs" />
     <Compile Remove="Data\Migrations\20200729012824_AddedPlacementTableDetails.cs" />
     <Compile Remove="Data\Migrations\20200729012824_AddedPlacementTableDetails.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200819173320_ToBeDeleted.cs" />
+    <Compile Remove="Data\Migrations\20200819173320_ToBeDeleted.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200819222007_AddRankChanges.cs" />
+    <Compile Remove="Data\Migrations\20200819222007_AddRankChanges.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200819224143_RankSchool.cs" />
+    <Compile Remove="Data\Migrations\20200819224143_RankSchool.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200819224949_AddRank.cs" />
+    <Compile Remove="Data\Migrations\20200819224949_AddRank.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200819225616_AddRankToSchool.cs" />
+    <Compile Remove="Data\Migrations\20200819225616_AddRankToSchool.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200819225727_NewMigration.cs" />
+    <Compile Remove="Data\Migrations\20200819225727_NewMigration.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

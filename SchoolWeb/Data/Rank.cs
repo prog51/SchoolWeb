@@ -11,22 +11,16 @@ namespace SchoolWeb.Data
     {
         [Key]
         public int Id { get; set; }
-
-        [ForeignKey("SchoolID")]
-        public School School { get; set; }
-
-        public int SchoolID { get; set; }
-
+             
         [ForeignKey("OrganizationID")]
         public Organization Organization { get; set; }
 
         public string OrganizationID { get; set; }
 
         [Required]
-        public string Value { get; set; }
+        public string ValueRank { get; set; }
 
         [Required]
-        [Display(Name ="Provide discription of rank value")]
         public string Description { get; set; }
 
         public DateTime DateCreated { get; set; }

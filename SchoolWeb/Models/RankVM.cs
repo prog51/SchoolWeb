@@ -14,22 +14,15 @@ namespace SchoolWeb.Models
         public int Id { get; set; }
 
         [Required]
-        [ForeignKey("SchoolID")]
-        public SchoolVM School { get; set; }
-
-        public int SchoolID { get; set; }
-        
-        [Required]
-        [ForeignKey("OrganizationID")]
         public OrganizationVM Organization { get; set; }
 
         public string OrganizationID { get; set; }
 
-        public IEnumerable<SelectListItem> Schools { get; set; }
+        public string Description { get; set; }
 
-        public IEnumerable<SelectListItem> Organizations { get; set; }
-
-        public string Value { get; set; }
+        [Required]
+        [Display(Name = "Rank value")]
+        public string ValueRank { get; set; }
 
         public DateTime DateCreated { get; set; }
     }
@@ -37,17 +30,14 @@ namespace SchoolWeb.Models
 
     public class CreateRankVM
     {
-      [Required]
-      public IEnumerable<SelectListItem> Schools { get; set; }
+     
+   
+     [Display(Name = "Rank value")]
+     public string ValueRank { get; set; }
 
-      public string OrganizationID { get; set; }
-
-      [Display(Name = "Rank value")]
-      public string Value { get; set; }
-
-      [Required]
-      [Display(Name = "Provide description of rank value")]
-      public string Description { get; set; }      
+     [Required]
+     [Display(Name = "Provide description of rank value")]
+     public string Description { get; set; }     
 
     }
 }

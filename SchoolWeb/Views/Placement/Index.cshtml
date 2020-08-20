@@ -1,4 +1,4 @@
-﻿@model DisplaySchoolVM
+﻿@model IEnumerable<SchoolWeb.Models.PlacementVM>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,48 +13,40 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                @Html.DisplayNameFor(model => model.OrganID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                @Html.DisplayNameFor(model => model.StudentID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Parish)
+                @Html.DisplayNameFor(model => model.SchoolID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PassMark)
+                @Html.DisplayNameFor(model => model.DateCreated)
             </th>
-
-            <th>
-                School Rank
-            </th>
-
+            <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.School) {
+@foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                @Html.DisplayFor(modelItem => item.OrganID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Address)
+                @Html.DisplayFor(modelItem => item.StudentID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Parish)
+                @Html.DisplayFor(modelItem => item.SchoolID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PassMark)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelItem => item.Rank.ValueRank)
+                @Html.DisplayFor(modelItem => item.DateCreated)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -30,6 +31,18 @@ namespace SchoolWeb.Models
 
         public DateTime DateCreated { get; set; }
 
-        
+     }
+
+    public class CreatePlacementVM
+    {
+        [Required]
+        public StudentVM Student { get; set; }
+
+        public int StudentID { get; set; }
+
+        [Required]
+        public IEnumerable<SelectListItem> Students { get; set; }
+
+        public string OrganizationID { get; set; }
     }
 }

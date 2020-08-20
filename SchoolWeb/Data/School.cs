@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,6 +26,11 @@ namespace SchoolWeb.Data
 
         [Required]
         public int PassMark { get; set; }
+
+        [ForeignKey("RankID")]
+        public Rank RankName { get; set; }
+
+        public int RankID { get; set; }
 
         public DateTime DateCreated { get; set; }
     }
