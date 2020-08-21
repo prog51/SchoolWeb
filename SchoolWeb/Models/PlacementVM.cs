@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using SchoolWeb.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,10 +10,14 @@ namespace SchoolWeb.Models
 {
     public class PlacementVM
     {
-        public int Id { get; set; }
-               
-        public StudentVM Student { get; set; }
 
+        
+        public Organization Organ { get; set; }
+             
+        public string OrganID { get; set; }
+
+        public StudentVM Student { get; set; }
+           
         public int StudentID { get; set; }
         
         public SchoolVM School { get; set; }

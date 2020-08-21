@@ -41,6 +41,19 @@ namespace SchoolWeb.Repository
             return DataValue;
         }
 
+        public ICollection<School> FindSchools(int id)
+        {
+
+            var NewStudent = _db.Students.Find(id);
+
+            var Score = NewStudent.Score;
+            var Parish = NewStudent.Parish;
+            var Schools = _db.Schools.Where(q => q.Parish == Parish && q.PassMark >= Score).ToList();
+          
+
+            return Schools;
+        }
+
         public bool isExists(int id)
         {
             var exists = _db.Students.Any(q => q.Id == id);
@@ -58,5 +71,6 @@ namespace SchoolWeb.Repository
             var DataValue = _db.Students.Update(entity);
             return Save();
         }
-    }
+
+     }
 }

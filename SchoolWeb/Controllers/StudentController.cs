@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using SchoolWeb.Data;
 using SchoolWeb.Models;
 using SchoolWeb.Contracts;
+using Microsoft.AspNetCore.Identity;
 
 namespace SchoolWeb.Controllers
 {
@@ -15,12 +16,21 @@ namespace SchoolWeb.Controllers
     {
 
         private readonly IStudentRepository _repo;
+        private readonly IPlacementRepository _repoPla; 
         private readonly IMapper _mapper;
+        private readonly UserManager<IdentityUser> _UserManager;
 
-        public StudentController(IStudentRepository repo, IMapper mapper)
+        public StudentController(
+            IStudentRepository repo, 
+            IMapper mapper, 
+            UserManager<IdentityUser> UserManager, 
+            IPlacementRepository repoPla
+            )
         {
             _repo = repo;
             _mapper = mapper;
+            _UserManager = UserManager;
+            _repoPla = repoPla;
         }
 
         // GET: Student
@@ -57,6 +67,7 @@ namespace SchoolWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(StudentVM Data)
         {
+            var org = _UserManager.GetUserAsync(User).Result;
             try
             {
                 // TODO: Add insert logic here
@@ -70,9 +81,44 @@ namespace SchoolWeb.Controllers
                 Students.DateCreated = DateTime.Now;
                 var Successful = _repo.Create(Students);
 
+
+                var MatchedSchools = _repo.FindSchools(Students.Id);
+
+                var i = 0;
+                var SchoolArray = MatchedSchools.ToArray();
+                var count = SchoolArray.Count();
+
+
+             while (i < count)
+                {
+                    var placementModel = new PlacementVM
+                    {
+                     OrganID = org.Id,
+                     StudentID = Students.Id,
+                     SchoolID = SchoolArray[i].Id,
+                     DateCreated = DateTime.Now
+                    };                    
+                    
+                    var NewplacementRecords = _mapper.Map<Placement>(placementModel);
+
+                    var Success2 = _repoPla.Create(NewplacementRecords);
+
+                    if (Success2)
+                    {
+                        ModelState.AddModelError("", "placed.");
+                        return View(Data);
+                    }
+                    else if(!Success2)
+                    {
+                        ModelState.AddModelError("", "Not placed.");
+                        return View(Data);
+                    }
+                    i++;
+                }               
+
                 if (!Successful)
                 {
-                    ModelState.AddModelError("", "There was an unknown error. database was not updated.");
+                    ModelState.AddModelError("", "There was an unknown error. database was not updated.iojoo");
                     return View(Data);
                 }
 

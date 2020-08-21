@@ -4,16 +4,17 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Placement</h1>
+<hr />
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success"><i class="fa fa-plus-circle" aria-hidden="true"></i> >Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                @Html.DisplayNameFor(model => model.OrganID)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.StudentID)
@@ -28,26 +29,35 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StudentID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SchoolID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateCreated)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrganID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudentID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SchoolID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCreated)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        } 
     </tbody>
 </table>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#tblData').DataTable();
+        });
+
+    </script>
+}
