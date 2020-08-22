@@ -28,7 +28,7 @@ namespace SchoolWeb.Data
         public int PassMark { get; set; }
 
         [ForeignKey("RankID")]
-        public Rank RankName { get; set; }
+        public Rank Rank { get; set; }
 
         public int RankID { get; set; }
 

@@ -27,15 +27,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.PassMark)
             </th>
-
-            <th>
-                School Rank
-            </th>
-
+            <th>Rank</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.School) {
+@foreach (var item in Model.Rank) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -52,14 +48,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.PassMark)
             </td>
-
             <td>
-                @Html.DisplayFor(modelItem => item.Rank.Id)
+                @Html.DisplayFor(modelItem => item.Rank.ValueRank)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Edit", "Edit", new {  id=item.Id }) |
+                @Html.ActionLink("Details", "Details", new {  id=item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
             </td>
         </tr>
 }

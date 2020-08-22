@@ -28,6 +28,7 @@ namespace SchoolWeb.Models
         [Display(Name="School Pass Mark")]
         public int PassMark { get; set; }
 
+        [Required]
         [Display(Name = "School Rank")]
         public RankVM Rank { get; set; }
 
@@ -46,7 +47,6 @@ namespace SchoolWeb.Models
         [Required]
         public string Email { get; set; }
 
-
         [Required]
         public string Address { get; set; }
 
@@ -55,7 +55,7 @@ namespace SchoolWeb.Models
 
         public IEnumerable<SelectListItem> Ranks { get; set; }
 
-        [Display(Name = "Leave Type")]
+        [Display(Name = "Rank")]
         public int RankId { get; set; }
 
         [Required]
@@ -81,7 +81,7 @@ namespace SchoolWeb.Models
         [Display(Name = "School Pass Mark")]
         public int PassMark { get; set; }
 
-        public List<SchoolVM> School { get; set; }
+        public List<SchoolVM> Rank { get; set; }
 
     }
 }

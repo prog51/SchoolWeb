@@ -48,7 +48,7 @@ namespace SchoolWeb.Repository
 
             var Score = NewStudent.Score;
             var Parish = NewStudent.Parish;
-            var Schools = _db.Schools.Where(q => q.Parish == Parish && q.PassMark >= Score).ToList();
+            var Schools = _db.Schools.Where(q => q.Parish == Parish && Score >= q.PassMark).ToList();
           
 
             return Schools;

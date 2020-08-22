@@ -28,6 +28,10 @@ namespace SchoolWeb.Data
         [Required]
         public string Email { get; set; }
 
+        public string Placed { get; set; }
+
         public DateTime DateCreated { get; set; }
+
+        public string SchoolPlaced { get; set; }
     }
 }

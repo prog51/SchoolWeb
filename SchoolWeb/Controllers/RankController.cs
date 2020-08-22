@@ -145,13 +145,13 @@ namespace SchoolWeb.Controllers
         // GET: Rank/Delete/5
         public ActionResult Delete(int id)
         {
-            var School = _repo.FindById(id);
+            var remove = _repo.FindById(id);
 
-            if (School == null)
+            if (remove == null)
             {
                 return NotFound();
             }
-            var Successful = _repo.Delete(School);
+            var Successful = _repo.Delete(remove);
 
             if (!Successful)
             {

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolWeb.Data;
 
 namespace SchoolWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200821195639_AddPlaceToSchool")]
+    partial class AddPlaceToSchool
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -350,9 +352,6 @@ namespace SchoolWeb.Migrations
                     b.Property<string>("Parish")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Placed")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("SchoolPlaced")
                         .HasColumnType("nvarchar(max)");
 
@@ -461,7 +460,7 @@ namespace SchoolWeb.Migrations
 
             modelBuilder.Entity("SchoolWeb.Data.School", b =>
                 {
-                    b.HasOne("SchoolWeb.Data.Rank", "Rank")
+                    b.HasOne("SchoolWeb.Data.Rank", "RankName")
                         .WithMany()
                         .HasForeignKey("RankID")
                         .OnDelete(DeleteBehavior.Cascade)

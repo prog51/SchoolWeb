@@ -41,9 +41,14 @@ namespace SchoolWeb.Controllers
         // GET: Placement
         public ActionResult Index()
         {
-            var placementL = _repo.FindAll().ToList();
-            var Model = _mapper.Map<List<Placement>, List<PlacementVM>>(placementL);
-            return View(Model);
+            var placementL = _repo.FindAll();
+            var Model = _mapper.Map<List<PlacementVM>>(placementL);
+
+           var Data = new DisplayPlacementVM
+            {
+                 placement = Model
+            };
+            return View(Data);
         }
 
         // GET: Placement/Details/5
@@ -61,6 +66,31 @@ namespace SchoolWeb.Controllers
             return View(Model);
         }
 
+
+        public ActionResult PlacementAction(int id)
+        {
+
+            var PlaceData = _repo.FindById(id);
+
+            var schoolId = PlaceData.SchoolID;
+            var studentId = PlaceData.StudentID;
+
+
+            var Student = _repostu.FindById(studentId);
+            var school = _repoSch.FindById(schoolId);
+            var SchoolName = school.Name;
+
+            Student.Placed = SchoolName;
+
+           var Success = _repostu.Update(Student);
+
+            if(Success)
+            {
+                ModelState.AddModelError("", "Updated");
+            }
+
+            return View();
+        }
         // GET: Placement/Create
         public ActionResult Create()
         {
@@ -110,6 +140,12 @@ namespace SchoolWeb.Controllers
         // GET: Placement/Edit/5
         public ActionResult Edit(int id)
         {
+            return View();
+        }
+
+        public ActionResult PlaceStudent(int Stuid, string schoolName)
+        {
+
             return View();
         }
 

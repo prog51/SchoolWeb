@@ -40,7 +40,7 @@ namespace SchoolWeb.Controllers
 
             var Model2 = new DisplaySchoolVM
             {
-                School = Model
+                Rank = Model
             };
 
 
@@ -154,7 +154,7 @@ namespace SchoolWeb.Controllers
             }
             catch
             {
-                return View();
+                return View(Data);
             }
         }
 
@@ -200,7 +200,7 @@ namespace SchoolWeb.Controllers
             }
             catch
             {
-                return View();
+                return View(Data);
             }
         }
     }

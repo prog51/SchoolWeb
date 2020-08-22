@@ -24,6 +24,10 @@
     <Compile Remove="Data\Migrations\20200819225616_AddRankToSchool.Designer.cs" />
     <Compile Remove="Data\Migrations\20200819225727_NewMigration.cs" />
     <Compile Remove="Data\Migrations\20200819225727_NewMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200822035844_AddMigration.cs" />
+    <Compile Remove="Data\Migrations\20200822035844_AddMigration.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200822070542_AddStudentPlacement.cs" />
+    <Compile Remove="Data\Migrations\20200822070542_AddStudentPlacement.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

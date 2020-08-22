@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SchoolWeb.Contracts
 {
-   public interface IStudentRepository : IRepositoryBase<Student>
+    public interface IStudentRepository : IRepositoryBase<Student>
     {
         ICollection<School> FindSchools(int id);
     }

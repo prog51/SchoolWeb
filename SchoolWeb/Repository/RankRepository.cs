@@ -1,4 +1,5 @@
-﻿using SchoolWeb.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using SchoolWeb.Contracts;
 using SchoolWeb.Data;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,7 @@ namespace SchoolWeb.Repository
         public ICollection<Rank> FindAll()
         {
             var DataValues = _db.Ranks.ToList();
+
             return DataValues;
 
         }

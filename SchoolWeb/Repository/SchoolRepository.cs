@@ -1,4 +1,5 @@
-﻿using SchoolWeb.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using SchoolWeb.Contracts;
 using SchoolWeb.Data;
 using System;
 using System.Collections.Generic;
@@ -31,13 +32,19 @@ namespace SchoolWeb.Repository
 
         public ICollection<School> FindAll()
         {
-            var DataValue = _db.Schools.ToList();
+            var DataValue = _db.Schools
+                .Include(q=>q.Rank)
+                .ToList();
+
             return DataValue;
         }
 
         public School FindById(int id)
         {
-            var DataValue = _db.Schools.Find(id);
+            var DataValue = _db.Schools
+                .Include(q => q.Rank)
+                .FirstOrDefault(q => q.Id == id);
+
             return DataValue;
         }
 

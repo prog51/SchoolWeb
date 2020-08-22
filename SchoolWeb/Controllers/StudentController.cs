@@ -221,7 +221,7 @@ namespace SchoolWeb.Controllers
             }
             catch
             {
-                return View();
+                return View(Data);
             }
         }
     }

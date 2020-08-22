@@ -25,6 +25,8 @@ namespace SchoolWeb.Models
 
         public string Parish { get; set; }
 
+        public string Placed { get; set; }
+
         [Required]
         public string Email { get; set; }
 

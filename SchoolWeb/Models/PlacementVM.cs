@@ -10,9 +10,9 @@ namespace SchoolWeb.Models
 {
     public class PlacementVM
     {
-
+        public int Id { get; set; }
         
-        public Organization Organ { get; set; }
+        public OrganizationVM Organ { get; set; }
              
         public string OrganID { get; set; }
 
@@ -51,5 +51,11 @@ namespace SchoolWeb.Models
             public IEnumerable<SelectListItem> School { get; set; }
 
             public IEnumerable<SelectListItem> Student { get; set; }
+    }
+
+    public class DisplayPlacementVM
+    {
+        public int Id { get; set; }
+        public List<PlacementVM> placement { get; set; }
     }
 }
