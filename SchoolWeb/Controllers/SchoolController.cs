@@ -135,7 +135,7 @@ namespace SchoolWeb.Controllers
         public ActionResult Edit(SchoolVM Data)
         {
             try
-            {
+              {
                 if (!ModelState.IsValid)
                 {
                     return View(Data);
@@ -143,6 +143,12 @@ namespace SchoolWeb.Controllers
 
                 var Schools = _mapper.Map<School>(Data);
                 var Successful = _repo.Update(Schools);
+
+                if (Successful)
+                {
+                    ModelState.AddModelError("", "Record was updated");
+                    return View(Data);
+                }
 
                 if (!Successful)
                 {
@@ -154,6 +160,7 @@ namespace SchoolWeb.Controllers
             }
             catch
             {
+                ModelState.AddModelError("", "There was an unknown error. database was not updated.");
                 return View(Data);
             }
         }

@@ -20,6 +20,7 @@ namespace SchoolWeb.Controllers
         private readonly ISchoolRepository _repoSch;
         private readonly IMapper _mapper;
         private readonly IStudentRepository _repostu;
+        private readonly IMailService _mailService;
         private readonly UserManager<IdentityUser> _UserManager;
 
         public PlacementController(
@@ -27,7 +28,8 @@ namespace SchoolWeb.Controllers
             IMapper mapper,
              UserManager<IdentityUser> UserManager,
              ISchoolRepository repoSch,
-             IStudentRepository repostu
+             IStudentRepository repostu,
+             IMailService mailService
            )
         {
             _repo = repo;
@@ -35,6 +37,7 @@ namespace SchoolWeb.Controllers
             _UserManager = UserManager;
             _repoSch = repoSch;
             _repostu = repostu;
+            _mailService = mailService;
         }
 
 
@@ -48,6 +51,7 @@ namespace SchoolWeb.Controllers
             {
                  placement = Model
             };
+
             return View(Data);
         }
 
@@ -86,7 +90,22 @@ namespace SchoolWeb.Controllers
 
             if(Success)
             {
-                ModelState.AddModelError("", "Updated");
+                 var mail = new MailRequest
+                    {
+                        Body = "Hi, Student.",
+                        Subject = "Student",
+                        ToEmail = Student.Email
+                 };
+                
+                _mailService.SendEmail(mail);
+
+                var mail2 = new MailRequest
+                {
+                    Body = "Hi, School.",
+                    Subject = "School",
+                    ToEmail = school.Email
+                };
+                _mailService.SendEmail(mail2);
             }
 
             return View();
@@ -140,7 +159,14 @@ namespace SchoolWeb.Controllers
         // GET: Placement/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            if (!_repo.isExists(id))
+            {
+                return NotFound();
+            }
+
+            var place = _repo.FindById(id);
+            var Model = _mapper.Map<DisplayPlacementVM>(place);
+            return View(Model);
         }
 
         public ActionResult PlaceStudent(int Stuid, string schoolName)
@@ -152,17 +178,36 @@ namespace SchoolWeb.Controllers
         // POST: Placement/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(DisplayPlacementVM Data)
         {
             try
             {
-                // TODO: Add update logic here
+                if (!ModelState.IsValid)
+                {
+                    return View(Data);
+                }
+
+                var place = _mapper.Map<Placement>(Data);
+                var Successful = _repo.Update(place);
+
+                if (Successful)
+                {
+                    ModelState.AddModelError("", "Record was updated");
+                    return View(Data);
+                }
+
+                if (!Successful)
+                {
+                    ModelState.AddModelError("", "There was an unknown error. database was not updated.");
+                    return View(Data);
+                }
 
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                ModelState.AddModelError("", "There was an unknown error. database was not updated.");
+                return View(Data);
             }
         }
 

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using SchoolWeb.Contracts;
 
 namespace SchoolWeb.Areas.Identity.Pages.Account.Manage
 {
@@ -13,15 +14,18 @@ namespace SchoolWeb.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
+        private readonly IRankRepository _repoRank;
 
         public DeletePersonalDataModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            ILogger<DeletePersonalDataModel> logger)
+            ILogger<DeletePersonalDataModel> logger,
+            IRankRepository repoRank)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _repoRank = repoRank;
         }
 
         [BindProperty]
@@ -66,6 +70,8 @@ namespace SchoolWeb.Areas.Identity.Pages.Account.Manage
                 }
             }
 
+            ///ToDo: DELETE ALL RELATED DATA FIRST!!!
+            
             var result = await _userManager.DeleteAsync(user);
             var userId = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)

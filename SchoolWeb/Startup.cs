@@ -16,6 +16,7 @@ using SchoolWeb.Contracts;
 using SchoolWeb.Repository;
 using SchoolWeb.Mappings;
 using AutoMapper;
+using SchoolWeb.Models;
 
 namespace SchoolWeb
 {
@@ -38,6 +39,8 @@ namespace SchoolWeb
             services.AddScoped<IRankRepository, RankRepository>();
             services.AddScoped<ISchoolRepository, SchoolRepository>();
             services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddTransient<IMailService, MailService>();
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.AddAutoMapper(typeof(MyMapper));
             /* services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                  .AddEntityFrameworkStores<ApplicationDbContext>();*/
