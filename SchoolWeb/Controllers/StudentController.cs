@@ -9,34 +9,43 @@ using SchoolWeb.Data;
 using SchoolWeb.Models;
 using SchoolWeb.Contracts;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using SchoolWeb.Repository;
 
 namespace SchoolWeb.Controllers
 {
+    [Authorize(Roles = "ExamBody")]
     public class StudentController : Controller
     {
 
         private readonly IStudentRepository _repo;
         private readonly IPlacementRepository _repoPla; 
         private readonly IMapper _mapper;
+        private readonly ISchoolRepository _repoSch;
         private readonly UserManager<IdentityUser> _UserManager;
 
         public StudentController(
             IStudentRepository repo, 
             IMapper mapper, 
             UserManager<IdentityUser> UserManager, 
-            IPlacementRepository repoPla
+            IPlacementRepository repoPla,
+            ISchoolRepository repoSch
             )
         {
             _repo = repo;
             _mapper = mapper;
             _UserManager = UserManager;
             _repoPla = repoPla;
+            _repoSch = repoSch;
+
         }
 
         // GET: Student
         public ActionResult Index()
         {
-            var StudentListing = _repo.FindAll().ToList();
+            var org = _UserManager.GetUserAsync(User).Result;
+            var currentLoginID = org.Id;
+            var StudentListing = _repo.FindAll().Where(q => q.OrganizationID == currentLoginID).ToList();
             var Model = _mapper.Map<List<Student>, List<StudentVM>>(StudentListing);
             return View(Model);
         }
@@ -62,6 +71,53 @@ namespace SchoolWeb.Controllers
             return View();
         }
 
+        public ActionResult CheckForSchools(int id)
+        {
+            var org = _UserManager.GetUserAsync(User).Result;
+            var check = _repo.FindSchools(id).ToList();
+            var data = _repo.FindById(id);
+
+
+
+            var MatchedSchools = _repo.FindSchools(id);
+            var i = 0;
+            var SchoolArray = MatchedSchools.ToArray();
+            var count = SchoolArray.Count();
+
+
+            while (i < count)
+            {
+
+                var placementModel = new PlacementVM
+                {
+                    OrganID = org.Id,
+                    StudentID = data.Id,
+                    SchoolID = SchoolArray[i].Id,
+                    DateCreated = DateTime.Now
+                };
+
+                var NewplacementRecords = _mapper.Map<Placement>(placementModel);
+
+                var Success2 = _repoPla.Create(NewplacementRecords);
+
+                if (Success2)
+                {
+                    ModelState.AddModelError("", "placed.");
+                    return RedirectToAction(nameof(Index));
+                }
+                else if (!Success2)
+                {
+                    ModelState.AddModelError("", "Not placed.");
+                    return RedirectToAction(nameof(Index));
+                }
+                i++;
+            }
+
+
+
+            return RedirectToAction(nameof(Index));
+        }
+
         // POST: Student/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -79,6 +135,7 @@ namespace SchoolWeb.Controllers
 
                 var Students = _mapper.Map<Student>(Data);
                 Students.DateCreated = DateTime.Now;
+                Students.OrganizationID = org.Id;
                 var Successful = _repo.Create(Students);
 
 
@@ -119,7 +176,7 @@ namespace SchoolWeb.Controllers
                 if (!Successful)
                 {
                     ModelState.AddModelError("", "There was an unknown error. database was not updated.iojoo");
-                    return View(Data);
+                    return RedirectToAction(nameof(Index));
                 }
 
                 return RedirectToAction(nameof(Index));

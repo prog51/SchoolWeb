@@ -35,6 +35,15 @@ namespace SchoolWeb.Repository
             return DataValue;
         }
 
+        public ICollection<Student> FindAll(string id)
+        {
+
+            var DataValue = _db.Students.Where(q=>q.OrganizationID == id).ToList();
+            
+            return DataValue;
+
+        }
+
         public Student FindById(int id)
         {
             var DataValue = _db.Students.Find(id);
@@ -48,8 +57,7 @@ namespace SchoolWeb.Repository
 
             var Score = NewStudent.Score;
             var Parish = NewStudent.Parish;
-            var Schools = _db.Schools.Where(q => q.Parish == Parish && Score >= q.PassMark).ToList();
-          
+            var Schools = _db.Schools.Where(q => q.Parish == Parish && Score >= q.PassMark).ToList();          
 
             return Schools;
         }

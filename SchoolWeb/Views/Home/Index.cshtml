@@ -6,80 +6,165 @@
     ViewData["Title"] = "Home Page";
 }
 
+    <center>
+        <div class="jumbotron jumbotron-fluid" style="background-color:darkcyan;">
+            <div class="container">
+                <h1 style="color:azure;"> Welcome to </h1>
+                <h1 class="display-2" Welcome to style="color:azure;"> <a><i class="fa fa-dot-circle-o" aria-hidden="true" style="color:azure;"></i> PinPoint</a></h1>
+                <p style="color:azure;">SCHOOL PLACEMENT MADE EASIER</p>
+            </div>
+        </div>
+    </center>
+
+@if (!SignInManager.IsSignedIn(User))
+{
+    <center>
+               
+
+        <div style="margin-top:50px; font-size:18pt; line-height:80px; font-weight:bold; font-family: 'Roboto', sans-serif; width:70%;">
+
+            <p>
+                PinPoint aims to make the transition from primary school to high school easier.  With PinPoint you can quickly find
+                matches between schools and a specific student.  The system using the parish the student live in and his/her score on
+                the relevant examination.
+            </p>
+
+        </div>
+
+    </center>
+
+    <center>
+        <h2 style="color:darkcyan; font-weight:bold; margin-top:60px; margin-bottom:60px;">WHAT ARE THE ADVANTAGES</h2>
+
+
+
+        <div class="row" style="padding-bottom:50px;">
+            <div class="col-md-4">
+                <div style="width: 18rem;">
+                    <div>
+                        <i class="fa fa-clock-o" aria-hidden="true" style='font-size: 78px; color: chartreuse'></i>
+                        <h4 class="card-title">Speed Up Placements</h4>
+                        <p class="card-text">
+                            With our System you can quickly enter schools and student,
+                            and PinPoint find the right schools right school for placement
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div style="width: 18rem;">
+                    <div>
+                        <i class="fa fa-clock-o" aria-hidden="true" style='font-size: 78px; color: chartreuse'></i>
+                        <h4 class="card-title">Reliable and Efficient</h4>
+                        <p class="card-text">
+                            Making the process of placing students in the right school more efficient, our system 
+                            provides a reliable and easy way of find the best school for your chil
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div style="width: 18rem;">
+
+                    <div>
+                        <i class="fa fa-clock-o" aria-hidden="true" style='font-size:78px; color:chartreuse'></i>
+                        <h5 class="card-title">No Wait Time</h5>
+                        <p class="card-text">
+                            When placement happens the school and the students
+                            parents will receive an email instantly
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </center>
+}
+
 <div class="text-center">
-    <h1> Welcome to </h1>
-    <h1 class="display-2" Welcome to> <a><i class="fa fa-dot-circle-o" aria-hidden="true"></i> PinPoint</a></h1>
-    <p>
-        
-    </p>
+
 
     @if (SignInManager.IsSignedIn(User))
     {
+
+
+
         if (User.IsInRole("ExamBody"))
         {
-<div class="row">
 
-    <div class="col-md-3">
-        <div class="card" style="width: 18rem;">
-            <img src="" class="card-img-top" alt="">
-            <div class="card-body">
-                <h5 class="card-title">Rank Management</h5>
-                <p class="card-text">
-                    This option allows for custom tags to be created.
-                    These tags are used to provide performance grading or status of a school
-                </p>
+            <h2 style="margin-top:30px; margin-bottom:30px;">CONTROL PANEL</h2>
+            <div class="row">
 
-                <a class="btn btn-primary" asp-area="" asp-controller="Rank" asp-action="Index">VIEW RANKING OPTIONS</a>
+                <div class="col-md-3">
+                    <div class="card" style="width: 18rem;">
+                        <img src="~/Image/istockphoto.jpg" class="card-img-top" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title">Rank Management</h5>
+                            <p class="card-text">
+                                This option allows for custom tags to be created.
+                                These tags are used to provide performance grading or status of a school
+                            </p>
+
+                            <a class="btn btn-primary" asp-area="" asp-controller="Rank" asp-action="Index">VIEW RANKING OPTIONS</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card" style="width: 18rem;">
+                        <img src="~/Image/SchoolXedi.jpg" class="card-img-top" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title">School Management</h5>
+                            <p class="card-text">
+                                This option will allow for the management of schools you want to enter in the system. Click link below to see
+                                how you can manage the schools you enter into the system
+                            </p>
+
+                            <a class="btn btn-primary" asp-area="" asp-controller="School" asp-action="Index">VIEW SCHOOL OPTIONS</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card" style="width: 18rem;">
+                        <img src="~/Image/asian-180.jpg" class="card-img-top" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title">Student Management</h5>
+                            <p class="card-text">
+                                This area provides options to manage the records of students within the system click link below to see option.
+                            </p>
+
+                            <a class="btn btn-primary" asp-area="" asp-controller="Student" asp-action="Index">VIEW STUDENT OPTIONS</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card" style="width: 18rem;">
+                        <img src="~/Image/istockphoto.jpg" class="card-img-top" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title">Placement Management</h5>
+                            <p class="card-text">
+                                This area will be use to management placement options for student in the matching schools.
+                                Click link below to view these options.
+                            </p>
+
+                            <a class="btn btn-primary" asp-area="" asp-controller="Placement" asp-action="Index">VIEW PLACEMENT OPTIONS</a>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </div>
-    </div>
-
-    <div class="col-md-3">
-        <div class="card" style="width: 18rem;">
-            <img src="" class="card-img-top" alt="">
-            <div class="card-body">
-                <h5 class="card-title">School Management</h5>
-                <p class="card-text">
-                    This option will allow for the management of schools you want to enter in the system. Click link below to see
-                    how you can manage the schools you enter into the system
-                </p>
-
-                <a class="btn btn-primary" asp-area="" asp-controller="School" asp-action="Index">VIEW SCHOOL OPTIONS</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3">
-        <div class="card" style="width: 18rem;">
-            <img src="" class="card-img-top" alt="">
-            <div class="card-body">
-                <h5 class="card-title">Student Management</h5>
-                <p class="card-text">
-                    This area provides options to manage the records of students within the system click link below to see option.  
-                </p>
-
-                <a class="btn btn-primary" asp-area="" asp-controller="Student" asp-action="Index">VIEW STUDENT OPTIONS</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-3">
-        <div class="card" style="width: 18rem;">
-            <img src="" class="card-img-top" alt="">
-            <div class="card-body">
-                <h5 class="card-title">Placement Management</h5>
-                <p class="card-text">
-                    This area will be use to management placement options for student in the matching schools. 
-                    Click link below to view these options.
-                </p>
-
-                <a class="btn btn-primary" asp-area="" asp-controller="Placement" asp-action="Index">VIEW PLACEMENT OPTIONS</a>
-            </div>
-        </div>
-    </div>
-
-</div>
         }
     }
+
+    <div class="container-fluid">
+        <img class="Lower-div" src="~/Image/landscape-2923423_1920.jpg" alt="">
+    </div>
 
 </div>

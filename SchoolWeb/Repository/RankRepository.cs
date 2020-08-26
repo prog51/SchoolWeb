@@ -33,9 +33,7 @@ namespace SchoolWeb.Repository
         public ICollection<Rank> FindAll()
         {
             var DataValues = _db.Ranks.ToList();
-
             return DataValues;
-
         }
 
         public Rank FindById(int id)

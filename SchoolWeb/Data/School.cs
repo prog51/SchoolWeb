@@ -18,6 +18,11 @@ namespace SchoolWeb.Data
         [Required]
         public string Email { get; set; }
 
+        [ForeignKey("OrganizationID")]
+        public Organization Organization { get; set; }
+
+        public string OrganizationID { get; set; }
+
         [Required]
         public string Address { get; set; }
 

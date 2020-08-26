@@ -13,7 +13,6 @@ namespace SchoolWeb.Models
       
         public int Id { get; set; }
 
-        [Required]
         public OrganizationVM Organization { get; set; }
 
         public string OrganizationID { get; set; }
@@ -24,7 +23,6 @@ namespace SchoolWeb.Models
         [Display(Name = "Rank value")]
         public string ValueRank { get; set; }
 
-        public DateTime DateCreated { get; set; }
     }
 
 

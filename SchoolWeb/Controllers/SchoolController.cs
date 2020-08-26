@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SchoolWeb.Contracts;
@@ -20,22 +21,27 @@ namespace SchoolWeb.Controllers
         private readonly ISchoolRepository _repo;
         private readonly IMapper _mapper;
         private readonly IRankRepository _repoRank;
+        private readonly UserManager<IdentityUser> _UserManager;
 
         public SchoolController(
             ISchoolRepository repo, 
             IMapper mapper, 
-            IRankRepository repoRank
+            IRankRepository repoRank,
+            UserManager<IdentityUser> UserManager
             )
         {
             _repo = repo;
             _mapper = mapper;
             _repoRank = repoRank;
+            _UserManager = UserManager;
         }
 
         // GET: School
         public ActionResult Index()
         {
-            var SchoolListing = _repo.FindAll();
+            var org = _UserManager.GetUserAsync(User).Result;
+            var currentLoginID = org.Id;
+            var SchoolListing = _repo.FindAll().Where(q => q.OrganizationID == currentLoginID).ToList();
             var Model = _mapper.Map<List<SchoolVM>>(SchoolListing);
 
             var Model2 = new DisplaySchoolVM
@@ -63,7 +69,7 @@ namespace SchoolWeb.Controllers
         // GET: School/Create
         public ActionResult Create()
         {
-
+         
             var RankVals = _repoRank.FindAll();
             var Ran = RankVals.Select(q => new SelectListItem
             {
@@ -73,6 +79,7 @@ namespace SchoolWeb.Controllers
             var model = new CreateSchoolVM
             {
                 Ranks = Ran
+
             };
             return View(model);
            
@@ -89,9 +96,11 @@ namespace SchoolWeb.Controllers
                 {
                     return View(Data);
                 }
-
-                 var Schools = _mapper.Map<School>(Data);
+                var org = _UserManager.GetUserAsync(User).Result;
+                var currentLoginID = org.Id;
+                var Schools = _mapper.Map<School>(Data);
                 Schools.DateCreated = DateTime.Now;
+                Schools.OrganizationID = org.Id;
                 var Successful = _repo.Create(Schools);
 
                 if (!Successful)
@@ -99,6 +108,8 @@ namespace SchoolWeb.Controllers
                     ModelState.AddModelError("","There was an unknown error. database was not updated.");
                     return View(Data);
                 }
+
+
                 return RedirectToAction(nameof(Index));
             }
             catch

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ using SchoolWeb.Models;
 
 namespace SchoolWeb.Controllers
 {
+    [Authorize(Roles = "ExamBody")]
     public class RankController : Controller
     {
 
@@ -37,7 +39,9 @@ namespace SchoolWeb.Controllers
 
         public ActionResult Index()
         {
-            var RankListing = _repo.FindAll().ToList();
+            var org = _UserManager.GetUserAsync(User).Result;
+            var currentLoginID = org.Id;
+            var RankListing = _repo.FindAll().Where(q => q.OrganizationID == currentLoginID).ToList();
             var Model = _mapper.Map<List<Rank>,List<RankVM>>(RankListing);
             return View(Model);
         }
@@ -127,6 +131,12 @@ namespace SchoolWeb.Controllers
 
                 var Ranks = _mapper.Map<Rank>(Data);
                 var Successful = _repo.Update(Ranks);
+
+                if (Successful)
+                {
+                    ModelState.AddModelError("", "Record was updated");
+                    return View(Data);
+                }
 
                 if (!Successful)
                 {

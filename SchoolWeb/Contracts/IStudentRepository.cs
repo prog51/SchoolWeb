@@ -9,5 +9,7 @@ namespace SchoolWeb.Contracts
     public interface IStudentRepository : IRepositoryBase<Student>
     {
         ICollection<School> FindSchools(int id);
+        ICollection<Student> FindAll(string id);
+
     }
 }

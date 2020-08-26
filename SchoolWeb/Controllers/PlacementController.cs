@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ using SchoolWeb.Models;
 
 namespace SchoolWeb.Controllers
 {
+    [Authorize(Roles = "ExamBody")]
     public class PlacementController : Controller
     {
 
@@ -44,7 +46,9 @@ namespace SchoolWeb.Controllers
         // GET: Placement
         public ActionResult Index()
         {
-            var placementL = _repo.FindAll();
+            var org = _UserManager.GetUserAsync(User).Result;
+            var currentLoginID = org.Id; 
+            var placementL = _repo.FindAll().Where(q=>q.OrganID == currentLoginID);
             var Model = _mapper.Map<List<PlacementVM>>(placementL);
 
            var Data = new DisplayPlacementVM
@@ -214,8 +218,21 @@ namespace SchoolWeb.Controllers
         // GET: Placement/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
-        }
+            var School = _repo.FindById(id);
+
+            if (School == null)
+            {
+                return NotFound();
+            }
+            var Successful = _repo.Delete(School);
+
+            if (!Successful)
+            {
+                return BadRequest();
+            }
+            return RedirectToAction(nameof(Index));
+
+         }
 
         // POST: Placement/Delete/5
         [HttpPost]
