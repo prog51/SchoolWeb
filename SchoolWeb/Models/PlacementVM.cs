@@ -55,7 +55,23 @@ namespace SchoolWeb.Models
 
     public class DisplayPlacementVM
     {
-        public int Id { get; set; }
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        public string Address { get; set; }
+
+        [Required]
+        public string Parish { get; set; }
+
+        [Required]
+        [Display(Name = "School Pass Mark")]
+        public int PassMark { get; set; }
+
         public List<PlacementVM> placement { get; set; }
     }
 

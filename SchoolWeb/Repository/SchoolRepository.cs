@@ -41,9 +41,7 @@ namespace SchoolWeb.Repository
 
         public School FindById(int id)
         {
-            var DataValue = _db.Schools
-                .Include(q => q.Rank)
-                .FirstOrDefault(q => q.Id == id);
+            var DataValue = _db.Schools.Find(id);
 
             return DataValue;
         }

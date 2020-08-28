@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SchoolWeb.Contracts;
 using SchoolWeb.Data;
 using SchoolWeb.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SchoolWeb.Controllers
 {
@@ -39,9 +37,7 @@ namespace SchoolWeb.Controllers
         // GET: School
         public ActionResult Index()
         {
-            var org = _UserManager.GetUserAsync(User).Result;
-            var currentLoginID = org.Id;
-            var SchoolListing = _repo.FindAll().Where(q => q.OrganizationID == currentLoginID).ToList();
+            var SchoolListing = _repo.FindAll();
             var Model = _mapper.Map<List<SchoolVM>>(SchoolListing);
 
             var Model2 = new DisplaySchoolVM
@@ -135,7 +131,7 @@ namespace SchoolWeb.Controllers
             }
 
             var Schools = _repo.FindById(id);
-            var Model = _mapper.Map<SchoolVM>(Schools);
+            var Model = _mapper.Map<EditSchoolVM>(Schools);
 
             return View(Model);
         }
@@ -143,12 +139,20 @@ namespace SchoolWeb.Controllers
         // POST: School/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(SchoolVM Data)
+        public ActionResult Edit(EditSchoolVM Data)
         {
-            try
+             try
               {
                 if (!ModelState.IsValid)
                 {
+                    foreach (var modelError in ModelState)
+                    {
+                        string propertyName = modelError.Key;
+                        if (modelError.Value.Errors.Count > 0)
+                        {
+                            ModelState.AddModelError("", propertyName +": " +  modelError.Value.ToString());
+                        }
+                    }
                     return View(Data);
                 }
 
@@ -157,7 +161,7 @@ namespace SchoolWeb.Controllers
 
                 if (Successful)
                 {
-                    ModelState.AddModelError("", "Record was updated");
+                    ModelState.AddModelError("", "Database was not updated.");
                     return View(Data);
                 }
 
@@ -174,6 +178,8 @@ namespace SchoolWeb.Controllers
                 ModelState.AddModelError("", "There was an unknown error. database was not updated.");
                 return View(Data);
             }
+
+           
         }
 
         // GET: School/Delete/5

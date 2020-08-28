@@ -22,6 +22,7 @@ namespace SchoolWeb.Mappings
             CreateMap<Rank, CreateRankVM>().ReverseMap();
             CreateMap<School, DisplaySchoolVM>().ReverseMap();
             CreateMap<Placement, DisplayPlacementVM>().ReverseMap();
+            CreateMap<School, EditSchoolVM>().ReverseMap();
         }
     }
 }

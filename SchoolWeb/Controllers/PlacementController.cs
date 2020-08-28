@@ -46,9 +46,7 @@ namespace SchoolWeb.Controllers
         // GET: Placement
         public ActionResult Index()
         {
-            var org = _UserManager.GetUserAsync(User).Result;
-            var currentLoginID = org.Id; 
-            var placementL = _repo.FindAll().Where(q=>q.OrganID == currentLoginID);
+            var placementL = _repo.FindAll();
             var Model = _mapper.Map<List<PlacementVM>>(placementL);
 
            var Data = new DisplayPlacementVM

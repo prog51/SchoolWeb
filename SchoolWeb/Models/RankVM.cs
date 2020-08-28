@@ -20,7 +20,7 @@ namespace SchoolWeb.Models
         public string Description { get; set; }
 
         [Required]
-        [Display(Name = "Rank value")]
+        [Display(Name = "Rank Tag")]
         public string ValueRank { get; set; }
 
     }

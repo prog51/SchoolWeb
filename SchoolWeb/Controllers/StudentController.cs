@@ -43,9 +43,7 @@ namespace SchoolWeb.Controllers
         // GET: Student
         public ActionResult Index()
         {
-            var org = _UserManager.GetUserAsync(User).Result;
-            var currentLoginID = org.Id;
-            var StudentListing = _repo.FindAll().Where(q => q.OrganizationID == currentLoginID).ToList();
+            var StudentListing = _repo.FindAll().ToList();
             var Model = _mapper.Map<List<Student>, List<StudentVM>>(StudentListing);
             return View(Model);
         }

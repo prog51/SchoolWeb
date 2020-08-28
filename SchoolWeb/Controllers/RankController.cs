@@ -39,9 +39,7 @@ namespace SchoolWeb.Controllers
 
         public ActionResult Index()
         {
-            var org = _UserManager.GetUserAsync(User).Result;
-            var currentLoginID = org.Id;
-            var RankListing = _repo.FindAll().Where(q => q.OrganizationID == currentLoginID).ToList();
+            var RankListing = _repo.FindAll().ToList();
             var Model = _mapper.Map<List<Rank>,List<RankVM>>(RankListing);
             return View(Model);
         }
@@ -114,7 +112,7 @@ namespace SchoolWeb.Controllers
             var Ranks = _repo.FindById(id);
             var Model = _mapper.Map<RankVM>(Ranks);
 
-            return View();
+            return View(Model);
         }
 
         // POST: Rank/Edit/5

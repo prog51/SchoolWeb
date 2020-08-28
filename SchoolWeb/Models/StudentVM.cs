@@ -28,6 +28,7 @@ namespace SchoolWeb.Models
         public string Placed { get; set; }
 
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Display(Name = "Date Created")]
